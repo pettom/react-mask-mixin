@@ -35,8 +35,12 @@ var ReactMaskMixin = {
     }
   },
 
+  getInput: function () {
+    return React.findDOMNode(this).querySelector('input');
+  },
+
   componentDidUpdate: function() {
-    this.findDOMNode().setSelectionRange(
+    this.getInput().setSelectionRange(
       this.mask.cursor,
       this.mask.cursor
     )
@@ -88,7 +92,7 @@ var ReactMaskMixin = {
     }
 
     var cursorPrev = this.mask.cursor
-    var cursorCurr = this.isMounted() ? this.getDOMNode().selectionStart : 0
+    var cursorCurr = this.isMounted() ? this.getInput().selectionStart : 0
     var removing = this.mask.cursor > cursorCurr
     cursorMax = Math.max(cursorMax, cursorMin)
 
@@ -152,7 +156,7 @@ var ReactMaskMixin = {
 
   _onKeyDown: function(e) {
     if (this.props.mask) {
-      this.mask.cursor = this.getDOMNode().selectionStart
+      this.mask.cursor = this.getInput().selectionStart
     }
     if (this.props.onKeyDown) {
       this.props.onKeyDown(e)
